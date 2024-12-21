@@ -1,0 +1,17 @@
+config:
+  host: localhost
+  method: GET
+  path: /get_abc
+  port: 8080
+  scheme: http
+get_params:
+  a: 1
+  b: 2
+  c: 3
+headers:
+  User-Agent: yaml-test-client
+result:
+  a: 1
+  b: 2
+  c: 3
+  method: get_abc
