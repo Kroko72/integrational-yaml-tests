@@ -22,7 +22,7 @@ class YamlParser:
             raise ValueError("Either file_path or yaml_string must be provided.")
 
     def _parse_yaml_file(self, file_path):
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding="utf-8") as file:
             return yaml.safe_load(file)
 
     def _parse_yaml_string(self, yaml_string):
@@ -36,7 +36,11 @@ class RequestBuilder:
         self.config = config['config']
         self.get_params = config.get('get_params', {})
         self.headers = config.get('headers', {})
-        self.base_url = f"{self.config['scheme']}://{self.config['host']}:{self.config['port']}"
+        # print(f"\n\n\n{self.config['port']}\n\n\n")
+        if self.config["port"] is not None:
+            self.base_url = f"{self.config['scheme']}://{self.config['host']}:{self.config['port']}"
+        else:
+            self.base_url = f"{self.config['scheme']}://{self.config['host']}"
         self.path = self.config['path']
         self.method = self.config['method'].upper()
 
@@ -60,14 +64,13 @@ class HttpClient:
     def send_request(self, request_data):
         method = request_data.pop('method')
         url = request_data.pop('url')
-
+        # print(url)
         if method == 'GET':
             response = requests.get(url, **request_data)
         elif method == 'POST':
             response = requests.post(url, **request_data)
         else:
             raise ValueError(f"Unsupported HTTP method: {method}")
-
         return response
 
 
