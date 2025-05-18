@@ -21,9 +21,8 @@ def add_venv_site_packages():
     if venv_path.exists():
         sys.path.append(str(venv_path.resolve()))
 
-
-# Вызов функции
 add_venv_site_packages()
+
 
 from lib.config_parser import ConfigParser
 from lib.request_builder import RequestBuilder
